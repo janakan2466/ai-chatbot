@@ -13,7 +13,8 @@ with open("Intents.json") as file:
 
 words= []
 labels= []
-docs= []
+docs_x= []
+docs_y= []
 
 #loop through all the intents within the Intent JSON file.
 for intent in data["intents"]:
@@ -21,9 +22,17 @@ for intent in data["intents"]:
         #tokenize all the words in each pattern key (returns a list)
         wrds = nltk.word_tokenize(pattern)
         words.extend(wrds)
-        docs.append(pattern)
+        docs_x.append(pattern)
+        docs_y.append(intent["tag"])
 
     if intent["tag"] not in labels:
         labels.append(intent["tag"])
         #stemming breaks sentences down to root words when which helps training the bot (makes the model more better)
         #tokenize the data
+
+words = [stemmer.stem(w.lower()) for w in words]
+words = sorted(List(set(words)))
+
+labels = sorted(labels)
+
+
