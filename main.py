@@ -104,10 +104,14 @@ def chat():
         results_index = numpy.argmax(results)
         tag = labels[results_index]
 
-        for tg in data["intents"]:
-            if tg['tag'] == tag:
-                responses = tg['responses']
+        #The bot needs to reach the 0.7 or 70% threshold in order to return an index stored from the JSON file.
+        if results[results_index] > 0.7:
+            for tg in data["intents"]:
+                if tg['tag'] == tag:
+                    responses = tg['responses']
 
-        print(random.choice(responses))
+            print(random.choice(responses))
+        else:
+            print("Sorry, I do not understand. Please try again")
 
 chat()
